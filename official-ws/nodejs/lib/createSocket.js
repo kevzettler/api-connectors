@@ -97,6 +97,11 @@ function emitSplitData(emitter, data) {
     debug('emitting %s with data %j', key, symbolData[symbol]);
     emitter.emit(key, _.extend({}, data, {data: symbolData[symbol]}));
   });
+
+  if (table === 'execution' && (data.data != null && data.data.length === 0)) {
+    const key = 'execution:partial:XBTUSD';
+    emitter.emit(key, _.extend({}, data, {data: []}));
+  }
 }
 
 function emitFullData(emitter, data) {
